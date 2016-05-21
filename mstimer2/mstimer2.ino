@@ -8,6 +8,8 @@ void flash() {
 }
 
 void setup() {
+  Serial.begin(9600);
+  
   pinMode(13, OUTPUT);
   
   MsTimer2::set(100, flash);
