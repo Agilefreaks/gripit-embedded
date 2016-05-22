@@ -3,14 +3,16 @@
 
 #include "frame.h"
 #include "input.h"
-#include "linked_list.h"
+#include "collector.h"
 
 Input* input;
+Collector* collector;
 
 void setup() {
   Serial.begin(9600);
 
   input = new Input();
+  collector = new Collector(42);
 }
 
 void loop() {
@@ -24,8 +26,9 @@ void testLoop() {
 
 void mainLoop() {
   Frame frame = input->read();
-
-  Serial.println(frame.print());
+  collector->collect(&frame);
+  
+  Serial.println(collector->exportFrame());
 
   delay(100);
 }

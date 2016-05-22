@@ -25,7 +25,7 @@ class LinkedList {
       newNode->next = root_;
       root_ = newNode;
       
-      if (full()) {
+      if (isFull()) {
         removeLast();
       }
       else {
@@ -46,7 +46,7 @@ class LinkedList {
       delete last;
     }
     
-    boolean full() {
+    boolean isFull() {
       return size_ == currentSize_;
     }
 

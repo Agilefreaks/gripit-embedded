@@ -10,21 +10,23 @@ class Collector {
   const int id_;
   const int filter_ = 10;
   
-  Frame *result_frame_;
-  LinkedList<Frame>* linkedList_;
+  Frame *currentFrame_;
+  Frame *lastFrame_;
+  LinkedList<Frame>* buffer_;
   
   public:
     static const int THRESHOLD = 30;
 
     Collector(int id): id_(id), filter_(10) {
-      linkedList_ = new LinkedList<Frame>(filter_);
+      buffer_ = new LinkedList<Frame>(filter_);
     };
     Collector(int id, int filter): id_(id), filter_(filter) {
-      linkedList_ = new LinkedList<Frame>(filter_);
+      buffer_ = new LinkedList<Frame>(filter_);
     };
     
     void collect(Frame *frame);
-    String print();
+    String exportFrame();
+    boolean hasFrame();
 };
 
 #endif
