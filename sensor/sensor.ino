@@ -2,8 +2,8 @@
 #include <MsTimer2.h>
 
 #include "frame.h"
-#include "sensor.h"
 #include "input.h"
+#include "linked_list.h"
 
 Input* input;
 
