@@ -16,8 +16,8 @@ void setup() {
 }
 
 void loop() {
-  testLoop();
-  //mainLoop();
+  //testLoop();
+  mainLoop();
 }
 
 void testLoop() {
@@ -28,8 +28,8 @@ void mainLoop() {
   Frame frame = input->read();
   collector->collect(&frame);
   
-  Serial.println(collector->exportFrame());
-
-  delay(100);
+  if (collector->hasFrame()) {
+    Serial.println(collector->exportFrame());
+  }
 }
 

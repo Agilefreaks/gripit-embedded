@@ -32,17 +32,6 @@ test(collector_hasFrame_with_buffer_not_full_will_return_false) {
   assertFalse(collector.hasFrame());   
 }
 
-test(collector_hasFrame_with_buffer_full_will_return_true) {
-  Collector collector = Collector(42, 2);
-  Frame frame1 = Frame(Collector::THRESHOLD + 1, 0, 0, 0);
-  Frame frame2 = Frame(Collector::THRESHOLD + 1, 0, 0, 0);
-  
-  collector.collect(&frame1);
-  collector.collect(&frame2);
-  
-  assertTrue(collector.hasFrame());   
-}
-
 test(collector_hasFrame_when_new_frame_does_not_pass_threshold_will_return_false) {
   Collector collector = Collector(42, 2);
   Frame frame1 = Frame(Collector::THRESHOLD + 1, 0, 0, 0);
@@ -60,5 +49,24 @@ test(collector_hasFrame_when_new_frame_does_not_pass_threshold_will_return_false
   collector.collect(&frame4);
   
   assertFalse(collector.hasFrame());   
+}
+
+test(collector_hasFrame_when_new_frame_does_pass_threshold_will_return_true) {
+  Collector collector = Collector(42, 2);
+  Frame frame1 = Frame(Collector::THRESHOLD + 130, 0, 0, 0);
+  Frame frame2 = Frame(Collector::THRESHOLD + 130, 0, 0, 0);
+  
+  collector.collect(&frame1);
+  collector.collect(&frame2);
+  
+  collector.exportFrame();
+
+  Frame frame3 = Frame(Collector::THRESHOLD - 20, 0, 0, 0);
+  Frame frame4 = Frame(Collector::THRESHOLD - 20, 0, 0, 0);
+
+  collector.collect(&frame3);
+  collector.collect(&frame4);
+  
+  assertTrue(collector.hasFrame());   
 }
 

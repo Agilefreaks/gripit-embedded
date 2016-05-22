@@ -17,10 +17,25 @@ test(frame_toString) {
   assertEqual(frame.toString(), String("2a,2b,2c,2d;"));
 }
 
-test(frame_minus_frame_will_return_value) {
+test(frame_diff_frame_will_return_value) {
   Frame frame1 = Frame(42, 43, 44, 45);
   Frame frame2 = Frame(42, 43, 44, 45);
   
-  assertEqual(frame1 - frame2, 0);
+  assertEqual(frame1.diff(frame2), 0);
 }
+
+test(frame_diff_frame_will_return_average_value) {
+  Frame frame1 = Frame(42, 43, 44, 45);
+  Frame frame2 = Frame(43, 44, 45, 46);
+  
+  assertEqual(frame1.diff(frame2), 4);
+}
+
+test(frame_diff_frame_will_not_return_negative_average_value) {
+  Frame frame1 = Frame(20, 0, 0, 0);
+  Frame frame2 = Frame(130, 0, 0, 0);
+  
+  assertEqual(frame1.diff(frame2), 110);
+}
+
 

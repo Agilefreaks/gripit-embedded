@@ -19,10 +19,15 @@ class Collector {
 
     Collector(int id): id_(id), filter_(10) {
       buffer_ = new LinkedList<Frame>(filter_);
+      currentFrame_ = new Frame();
+      lastFrame_ = new Frame();
     };
     Collector(int id, int filter): id_(id), filter_(filter) {
       buffer_ = new LinkedList<Frame>(filter_);
+      currentFrame_ = new Frame();
+      lastFrame_ = new Frame();
     };
+    ~Collector();
     
     void collect(Frame *frame);
     String exportFrame();

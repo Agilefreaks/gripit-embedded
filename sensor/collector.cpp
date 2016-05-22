@@ -3,6 +3,12 @@
 #include "collector.h"
 #include "frame.h"
 
+Collector::~Collector() {
+  delete(buffer_);
+  delete(lastFrame_);
+  delete(currentFrame_);
+}
+
 void Collector::collect(Frame *frame) {
   buffer_->pushFront(frame);
 
@@ -17,14 +23,16 @@ void Collector::collect(Frame *frame) {
   }
 
   int bufferSize = buffer_->size();
-  currentFrame_ = new Frame(sumTop / bufferSize, sumRight / bufferSize, sumBottom / bufferSize, sumLeft / bufferSize);
+  
+  currentFrame_->set(sumTop / bufferSize, sumRight / bufferSize, sumBottom / bufferSize, sumLeft / bufferSize);
 };
 
 String Collector::exportFrame() {
-  lastFrame_ = new Frame(currentFrame_->up(), currentFrame_->right(), currentFrame_->bottom(), currentFrame_->left());
+  lastFrame_->set(currentFrame_->up(), currentFrame_->right(), currentFrame_->bottom(), currentFrame_->left());
+  
   return String(String(id_, HEX) + ":" + currentFrame_->toString());
 };
 
 boolean Collector::hasFrame() {
-  return buffer_->isFull();
+  return (currentFrame_->diff(*lastFrame_) > THRESHOLD) && buffer_->isFull();
 }
